@@ -12,31 +12,26 @@ export default function AdminLogin() {
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setError('');
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+  setLoading(true);
+  setError('');
 
-    try {
-      // Call the login API
-      const response = await adminLogin(email, password);
-      
-      // Check if login was successful
-      if (response.success) {
-        // Token is already saved in localStorage by adminLogin function
-        // Redirect to dashboard
-        router.push('/dashboard');
-      } else {
-        // Show error message from API response
-        setError(response.message || 'Login failed. Please check your credentials.');
-      }
-    } catch (err) {
-      setError('Something went wrong. Please try again later.');
-      console.error('Login error:', err);
-    } finally {
-      setLoading(false);
+  try {
+    const response = await adminLogin(email, password);
+
+    if (response.success) {
+      router.push('/dashboard');
+    } else {
+      setError(response.message || 'Login failed. Please check your credentials.');
     }
-  };
+  } catch (err) {
+    setError('Something went wrong. Please try again later.');
+    console.error('Login error:', err);
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
