@@ -205,6 +205,7 @@ export interface Product {
   sizes: string[];
   colors: string[];
   images: string[];
+   season?: string;
   createdAt?: string;
   updatedAt?: string;
 }
